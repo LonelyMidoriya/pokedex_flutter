@@ -3,11 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:number_paginator/number_paginator.dart';
 import '../../../../domain/pokemon_repository.dart';
-import '../../../utils/Consts.dart';
 import '../../../utils/widgets/grid_item.dart';
-import '../bloc/pokemon_bloc.dart';
-import '../bloc/pokemon_event.dart';
-import '../bloc/pokemon_state.dart';
+import '../bloc/pokemon_list_bloc.dart';
+import '../bloc/pokemon_list_event.dart';
+import '../bloc/pokemon_list_state.dart';
 
 class PokemonListScreen extends StatefulWidget {
   const PokemonListScreen({Key? key}) : super(key: key);
@@ -48,7 +47,6 @@ class _PokemonListScreenState extends State<PokemonListScreen> {
                       BlocProvider.of<PokemonBloc>(context).add(
                         PokemonLoadingEvent(page: _currentPage),
                       );
-                      // pokemonBloc.add(PokemonPageRequest(page: index));
                     },
                   ),
                 ),
@@ -60,7 +58,6 @@ class _PokemonListScreenState extends State<PokemonListScreen> {
             body: SafeArea(
               child: Stack(
                 children: [
-                  // _buildGrid(state),
                   state.pokemonEntries.isNotEmpty
                       ? Padding(
                           padding: const EdgeInsets.all(8.0),
@@ -77,7 +74,7 @@ class _PokemonListScreenState extends State<PokemonListScreen> {
                                     BlocProvider.of<PokemonBloc>(context).add(
                                   NavigateToChosenPokemonEvent(
                                     context: context,
-                                    id: index + pageSize*_currentPage + 1,
+                                    id: state.pokemonEntries[index].id,
                                   ),
                                 ),
                                 child: GridItem(state.pokemonEntries[index]),

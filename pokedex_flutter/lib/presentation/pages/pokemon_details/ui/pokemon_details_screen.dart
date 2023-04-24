@@ -39,16 +39,3 @@ class PokemonScreen extends StatelessWidget {
     );
   }
 }
-/*
-PokemonDetails(Pokemon(
-id: 0,
-height: 0,
-name: "Connection Error",
-hpStat: 0,
-attackStat: 0,
-defenseStat: 0,
-spAttackStat: 0,
-spDefStat: 0,
-speedStat: 0,
-weight: 0,
-types: ['error']));*/

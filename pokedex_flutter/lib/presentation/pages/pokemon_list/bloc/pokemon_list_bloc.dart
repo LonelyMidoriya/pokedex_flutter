@@ -1,12 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pokedex_flutter/presentation/pages/pokemon_list/bloc/pokemon_state.dart';
+import 'package:pokedex_flutter/presentation/pages/pokemon_list/bloc/pokemon_list_state.dart';
 
 import '../../../../domain/models/pokemon_entry.dart';
 import '../../../../domain/pokemon_repository.dart';
-import '../../pokemon_details/ui/pokemon_screen.dart';
-import 'pokemon_event.dart';
+import '../../pokemon_details/ui/pokemon_details_screen.dart';
+import 'pokemon_list_event.dart';
 
 class PokemonBloc extends Bloc<PokemonEvent, PokemonState> {
   final PokemonRepository _pokemonRepository;

@@ -28,9 +28,6 @@ class GridItem extends StatelessWidget {
               imageUrl:
                   'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${entry.url.replaceAll(RegExp(r'[^0-9]'),'').substring(1)}.png',
             ),
-            // const SizedBox(
-            //   height: 12,
-            // ),
             Text(
               entry.name.toUpperCase(),
               style: Theme.of(context)
