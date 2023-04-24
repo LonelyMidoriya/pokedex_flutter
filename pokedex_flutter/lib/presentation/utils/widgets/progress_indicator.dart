@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../utils/Consts.dart';
+import '../Consts.dart';
 
 class MyProgressIndicator extends StatelessWidget {
   const MyProgressIndicator({Key? key, required this.end, required this.stat, required this.color}) : super(key: key);

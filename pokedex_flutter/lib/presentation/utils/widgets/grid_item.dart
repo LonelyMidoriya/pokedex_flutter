@@ -1,15 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:pokedex_flutter/data/DataBase.dart';
-import 'package:pokedex_flutter/data/PokemonRepository.dart';
-import 'package:pokedex_flutter/pages/PokemonScreen.dart';
-import '../data/models/Pokemon.dart';
-import '../data/models/PokemonEntry.dart';
-import '../utils/ColorConverter.dart';
+import '../../../domain/models/pokemon_entry.dart';
+
 
 class GridItem extends StatelessWidget {
   final PokemonEntry entry;
-  GridItem(this.entry);
+  GridItem(this.entry, {super.key});
 
 
   @override
@@ -19,22 +15,7 @@ class GridItem extends StatelessWidget {
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(8))),
           color: Color(0xffdcec5fa)),
-      child: TextButton(
-        onPressed: () async {
-          int pokemonNumber = int.parse(entry.url.replaceAll(RegExp(r'[^0-9]'),'').substring(1));
-          Pokemon pokemon = await getPokemon(pokemonNumber);
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) {
-                return PokemonScreen(
-                  pokemon: pokemon,
-                );
-              },
-            ),
-          );
-        },
-        child: Column(
+      child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -43,6 +24,7 @@ class GridItem extends StatelessWidget {
               width: 100,
               height: 100,
               fit: BoxFit.fill,
+              errorWidget:(context,_,__) => Image.asset('assets/images/mystery.jpg'),
               imageUrl:
                   'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${entry.url.replaceAll(RegExp(r'[^0-9]'),'').substring(1)}.png',
             ),
@@ -58,18 +40,6 @@ class GridItem extends StatelessWidget {
             )
           ],
         ),
-      ),
-    );
-  }
-  Future<Pokemon> getPokemon(int pokemonNumber) async {
-      Pokemon pokemonApi = await PokemonRepository().getPokemon(entry.url);
-      if(pokemonApi.id==0){
-        Pokemon pokemonDb = await DatabaseRepository.instance.getPokemon(pokemonNumber);
-        return pokemonDb;
-      }
-      else{
-        await DatabaseRepository.instance.insertPokemon(pokemon: pokemonApi);
-        return await DatabaseRepository.instance.getPokemon(pokemonApi.id);
-      }
+      );
   }
 }
