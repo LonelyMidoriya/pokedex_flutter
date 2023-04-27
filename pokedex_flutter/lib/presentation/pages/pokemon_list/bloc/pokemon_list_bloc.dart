@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pokedex_flutter/presentation/pages/pokemon_list/bloc/pokemon_list_state.dart';
 
 import '../../../../domain/models/pokemon_entry.dart';
-import '../../../../domain/pokemon_repository.dart';
+import '../../../../domain/repository/pokemon_repository.dart';
 import '../../pokemon_details/ui/pokemon_details_screen.dart';
 import 'pokemon_list_event.dart';
 
@@ -45,10 +45,9 @@ class PokemonBloc extends Bloc<PokemonEvent, PokemonState> {
 
   Future<void> initPagesNumber(Emitter<PokemonState> emit) async {
     int pagesCount;
-    try{
+    try {
       pagesCount = await _pokemonRepository.getPagesCount();
-    }
-    catch(e){
+    } catch (e) {
       pagesCount = await _pokemonRepository.getPagesCountFromDB();
     }
     emit(

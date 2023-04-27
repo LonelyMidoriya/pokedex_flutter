@@ -1,7 +1,7 @@
 import '../../domain/models/pokemon.dart';
 import '../../domain/models/pokemon_entry.dart';
-import '../../domain/pokemon_repository.dart';
-import '../../presentation/utils/Consts.dart';
+import '../../domain/repository/pokemon_repository.dart';
+import '../../utils/consts.dart';
 import '../api/api.dart';
 import '../db/database.dart';
 
@@ -27,7 +27,7 @@ class PokemonRepositoryImpl implements PokemonRepository {
         );
       }
       for (var element in datas) {
-        await DatabaseRepository.instance.insertPokemonList(pokemon: element);
+        await DatabaseRepository.instance.insertPokemonList(pokemonEntry: element);
       }
       return datas;
     } catch (e) {

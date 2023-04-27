@@ -1,0 +1,24 @@
+import 'dart:ui';
+
+const int statDev = 200;
+const int pageSize = 60;
+const String url = 'https://pokeapi.co/api/v2/';
+const String id = 'id';
+const String height = 'height';
+const String hpStat = 'hpStat';
+const String tableName1 = 'Table1';
+const String tableName2 = 'Table2';
+const String tableName3 = 'Table3';
+const String name = 'name';
+const String attackStat = 'attackStat';
+const String defenseStat = 'defenseStat';
+const String spAttackStat = 'spAttackStat';
+const String spDefStat = 'spDefStat';
+const String speedStat = 'speedStat';
+const String weight = 'weight';
+const String types = 'types';
+const String urlText = 'url';
+const String pagesCount = 'pagesCount';
+const String imageUrl = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/';
+const String assetImage = 'assets/images/mystery.jpg';
+const Color gridCellColor = Color(0xffdcec5fa);

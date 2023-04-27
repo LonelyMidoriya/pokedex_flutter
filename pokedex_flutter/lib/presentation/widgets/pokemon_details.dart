@@ -2,13 +2,13 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../../domain/models/pokemon.dart';
-import '../color_converter.dart';
-import '../Consts.dart';
+import '../../utils/color_converter.dart';
+import '../../utils/consts.dart';
 import 'progress_indicator.dart';
 
 class PokemonDetails extends StatelessWidget {
   final Pokemon pokemon;
-  PokemonDetails(this.pokemon, {super.key});
+  const PokemonDetails(this.pokemon, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +18,10 @@ class PokemonDetails extends StatelessWidget {
           gradient: LinearGradient(
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
-              colors: [convertColor(pokemon.types[0]), Colors.black])),
+              colors: [
+            convertColor(pokemon.types[0]),
+            Colors.black,
+          ])),
       child: Padding(
         padding: const EdgeInsets.all(15),
         child: SingleChildScrollView(
@@ -41,11 +44,11 @@ class PokemonDetails extends StatelessWidget {
                 fit: BoxFit.fill,
                 width: 200,
                 height: 200,
-                errorWidget:(context,_,__) => Image.asset('assets/images/mystery.jpg'),
+                errorWidget: (context, _, __) =>
+                    Image.asset(assetImage),
                 placeholder: (context, url) =>
-                const CircularProgressIndicator(),
-                imageUrl:
-                'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png',
+                    const CircularProgressIndicator(),
+                imageUrl: '$imageUrl${pokemon.id}.png',
               ),
               const SizedBox(
                 height: 12,
@@ -66,8 +69,7 @@ class PokemonDetails extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      pokemon.name[0].toUpperCase() +
-                          pokemon.name.substring(1),
+                      pokemon.name[0].toUpperCase() + pokemon.name.substring(1),
                       style: const TextStyle(
                           fontSize: 28, fontWeight: FontWeight.bold),
                     ),
@@ -89,7 +91,6 @@ class PokemonDetails extends StatelessWidget {
                               style: const TextStyle(fontSize: 18),
                             ),
                           ),
-
                       ],
                     ),
                     const SizedBox(
@@ -126,7 +127,7 @@ class PokemonDetails extends StatelessWidget {
                         ),
                         Text(
                           '${pokemon.weight / 10} kg',
-                          style: TextStyle(fontSize: 18),
+                          style: const TextStyle(fontSize: 18),
                         ),
                       ],
                     ),

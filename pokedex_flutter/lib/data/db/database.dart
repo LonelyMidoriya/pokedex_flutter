@@ -1,34 +1,26 @@
+import 'package:get_it/get_it.dart';
+import 'package:pokedex_flutter/data/mappers/pokemon_entry_mapper.dart';
+import 'package:pokedex_flutter/data/mappers/pokemon_mapper.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
 import '../../domain/models/pokemon.dart';
 import '../../domain/models/pokemon_entry.dart';
+import '../../utils/consts.dart';
 
 class DatabaseRepository {
-  static const String id = 'id';
-  static const String height = 'height';
-  static const String hpStat = 'hpStat';
-  static const String tableName1 = 'Table1';
-  static const String tableName2 = 'Table2';
-  static const String tableName3 = 'Table3';
-  static const String name = 'name';
-  static const String attackStat = 'attackStat';
-  static const String defenseStat = 'defenseStat';
-  static const String spAttackStat = 'spAttackStat';
-  static const String spDefStat = 'spDefStat';
-  static const String speedStat = 'speedStat';
-  static const String weight = 'weight';
-  static const String types = 'types';
-  static const String url = 'url';
-  static const String pagesCount = 'pagesCount';
-
-  static final DatabaseRepository instance = DatabaseRepository._init();
-  DatabaseRepository._init();
+  final PokemonEntryMapper pokemonEntryMapper;
+  final PokemonMapper pokemonMapper;
+  static final DatabaseRepository instance = DatabaseRepository._init(
+    GetIt.I.get<PokemonEntryMapper>(),
+    GetIt.I.get<PokemonMapper>(),
+  );
+  DatabaseRepository._init(this.pokemonEntryMapper, this.pokemonMapper);
 
   Database? _database;
   Future<Database> get database async {
     if (_database != null) return _database!;
-    _database = await _initDB('pokemondb6.db');
+    _database = await _initDB('pokemondb9.db');
     return _database!;
   }
 
@@ -40,28 +32,28 @@ class DatabaseRepository {
 
   Future _createDB(Database db, int version) async {
     await db.execute('''
-create table ${tableName1} ( 
-  ${id} integer primary key, 
-  ${height} integer not null,
-  ${hpStat} integer not null,
-  ${name} text not null,
-  ${attackStat} integer not null,
-  ${defenseStat} integer not null,
-  ${spAttackStat} integer not null,
-  ${spDefStat} integer not null,
-  ${speedStat} integer not null,
-  ${weight} integer not null,
-  ${types} text not null)
+create table $tableName1 ( 
+  $id integer primary key, 
+  $height integer not null,
+  $hpStat integer not null,
+  $name text not null,
+  $attackStat integer not null,
+  $defenseStat integer not null,
+  $spAttackStat integer not null,
+  $spDefStat integer not null,
+  $speedStat integer not null,
+  $weight integer not null,
+  $types text not null)
 ''');
     await db.execute('''
-  create table ${tableName2} (
-  ${id} int not null,  
-  ${url} text not null,
-  ${name} text primary key)
+  create table $tableName2 (
+  $id int not null,  
+  $urlText text not null,
+  $name text primary key)
 ''');
     await db.execute('''
-  create table ${tableName3} ( 
-  ${pagesCount} int primary key)
+  create table $tableName3 ( 
+  $pagesCount int primary key)
 ''');
   }
 
@@ -69,7 +61,7 @@ create table ${tableName1} (
     final db = await instance.database;
     await db.insert(
       tableName1,
-      pokemon.toMap(),
+      pokemonMapper.toMap(pokemon),
       conflictAlgorithm: ConflictAlgorithm.ignore,
     );
   }
@@ -83,19 +75,22 @@ create table ${tableName1} (
     );
   }
 
-  Future<void> insertPokemonList({required PokemonEntry pokemon}) async {
+  Future<void> insertPokemonList({required PokemonEntry pokemonEntry}) async {
     final db = await instance.database;
     await db.insert(
       tableName2,
-      pokemon.toMap(),
+      pokemonEntryMapper.toMap(pokemonEntry),
       conflictAlgorithm: ConflictAlgorithm.ignore,
     );
   }
 
   Future<List<PokemonEntry>> getPokemonList(int limit, int offset) async {
     final db = await instance.database;
-    final result = await db.query(tableName2,where: "id > ${offset} and id <= ${offset+limit}");
-    return result.map((json) => PokemonEntry.fromJson(json)).toList();
+    final result = await db.query(tableName2,
+        where: "id > $offset and id <= ${offset + limit}");
+    return result
+        .map((json) => pokemonEntryMapper.toPokemonEntry(json))
+        .toList();
   }
 
   Future<int> getPagesCount() async {
@@ -109,7 +104,7 @@ create table ${tableName1} (
 
     final result = await db.query(tableName1, where: "id = $id");
     if (result.isNotEmpty) {
-      return Pokemon.fromJson(result.first);
+      return pokemonMapper.toPokemon(result.first);
     } else {
       return Pokemon(
           id: 0,

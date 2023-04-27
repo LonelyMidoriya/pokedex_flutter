@@ -3,12 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 
-import '../../../../domain/pokemon_repository.dart';
-import '../../../utils/widgets/pokemon_details.dart';
+import '../../../../domain/repository/pokemon_repository.dart';
+import '../../../widgets/pokemon_details.dart';
 import '../bloc/pokemon_details_state.dart';
 import '../bloc/pokemon_details_bloc.dart';
 import '../bloc/pokemon_details_event.dart';
-
 
 class PokemonScreen extends StatelessWidget {
   final int id;

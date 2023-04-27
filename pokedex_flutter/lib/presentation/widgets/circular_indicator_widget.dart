@@ -6,7 +6,7 @@ class CircularIndicatorWidget extends StatefulWidget {
   final EdgeInsets padding;
   final bool hasInternet;
 
-  CircularIndicatorWidget({
+  const CircularIndicatorWidget({super.key,
     required this.loadData,
     required this.content,
     this.padding = EdgeInsets.zero,

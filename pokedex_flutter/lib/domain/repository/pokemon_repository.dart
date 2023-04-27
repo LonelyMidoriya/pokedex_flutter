@@ -1,5 +1,5 @@
-import 'models/pokemon.dart';
-import 'models/pokemon_entry.dart';
+import '../models/pokemon.dart';
+import '../models/pokemon_entry.dart';
 
 abstract class PokemonRepository{
   Future<List<PokemonEntry>> getPokemonList(int pageIndex);

@@ -1,4 +1,4 @@
-import '../../data/db/DataBase.dart';
+import '../db/DataBase.dart';
 
 Future<void> initDb() async {
   await DatabaseRepository.instance.database;

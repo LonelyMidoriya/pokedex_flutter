@@ -1,8 +1,9 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pokedex_flutter/domain/models/pokemon.dart';
 import 'package:pokedex_flutter/presentation/pages/pokemon_details/bloc/pokemon_details_event.dart';
 import 'package:pokedex_flutter/presentation/pages/pokemon_details/bloc/pokemon_details_state.dart';
 
-import '../../../../domain/pokemon_repository.dart';
+import '../../../../domain/repository/pokemon_repository.dart';
 
 class PokemonDetailsBloc
     extends Bloc<PokemonDetailsEvent, PokemonDetailsState> {
@@ -25,10 +26,10 @@ class PokemonDetailsBloc
   }
 
   Future<void> fetchPokemon(int id, Emitter<PokemonDetailsState> emit) async {
-    var pokemon;
-    try{
+    Pokemon pokemon;
+    try {
       pokemon = await _pokemonRepository.getPokemon(id);
-    }catch(e){
+    } catch (e) {
       pokemon = await _pokemonRepository.getPokemonFromDB(id);
     }
 
