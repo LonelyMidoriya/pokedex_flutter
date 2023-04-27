@@ -6,7 +6,7 @@ import 'package:path/path.dart';
 
 import '../../domain/models/pokemon.dart';
 import '../../domain/models/pokemon_entry.dart';
-import '../../utils/consts.dart';
+import '../../utils/db_consts.dart';
 
 class DatabaseRepository {
   final PokemonEntryMapper pokemonEntryMapper;
@@ -20,7 +20,7 @@ class DatabaseRepository {
   Database? _database;
   Future<Database> get database async {
     if (_database != null) return _database!;
-    _database = await _initDB('pokemondb9.db');
+    _database = await _initDB(dbName);
     return _database!;
   }
 
